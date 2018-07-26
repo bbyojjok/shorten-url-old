@@ -6,7 +6,6 @@ const ShortenUrl = require('../models/shortenUrl');
 
 route.get('/:code?', async (req, res) => {
 	const urlCode = req.params.code;
-	console.log('urlCode:', urlCode);
 	switch (urlCode) {
 		case undefined:
 			return res.sendFile(path.join(__dirname, '../', 'views/create.html'));
