@@ -7,6 +7,23 @@
 			$('#url').focus();
 			return false;
 		}
+		// use $.ajax
+		$.ajax({
+			method: 'POST',
+			url: origin+'/api/create',
+			contentType: 'application/json',
+			data: JSON.stringify({ originalUrl: url }),
+			dataType: 'json',
+			success: function(data, textStatus, jqXHR){
+				var shortUrl = data.shortUrl;
+				$('#createdUrl').show().find('#shortUrl').text(shortUrl).attr('href', shortUrl);
+			},
+			error: function(jqXHR, textStatus, errorThrown){
+				alert(jqXHR.responseText);
+			}
+		});
+		/*
+		// use fetch 
 		fetch(origin+'/api/create', {
 			method: 'POST',
 			body: JSON.stringify({ originalUrl: url }),
@@ -22,12 +39,13 @@
 				alert(result);
 			});
 		});
+		*/
 		return false;
 	});
 
 	$('#btnCopyUrl').bind('click', function(){
 		var target = $('#shortUrl').text();
-		var $temp = $('<input>');
+		var $temp = $('<input style="visibility:hidden;">');
 		$('body').append($temp);
 		$temp.val(target).select();
 		document.execCommand('copy');

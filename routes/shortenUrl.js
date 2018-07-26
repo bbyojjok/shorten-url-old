@@ -4,8 +4,8 @@ const shortid = require('shortid');
 const validUrl = require('valid-url');
 const ShortenUrl = require('../models/shortenUrl');
 
-route.get('/:code?', async (req, res) => {
-	const urlCode = req.params.code;
+route.get('/:urlCode?', async (req, res) => {
+	const urlCode = req.params.urlCode;
 	switch (urlCode) {
 		case undefined:
 			return res.sendFile(path.join(__dirname, '../', 'views/create.html'));
@@ -17,7 +17,7 @@ route.get('/:code?', async (req, res) => {
 			const queryResult = await ShortenUrl.findOne({ urlCode: urlCode }, err => {
 				if (err) throw err;
 			});
-			if (queryResult) return res.redirect(queryResult.originalUrl);
+			if (queryResult) return res.redirect(301, queryResult.originalUrl);
 			else return res.redirect('/error');
 			break;
 	}

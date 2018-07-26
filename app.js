@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const route = require('./routes/shortenUrl');
 
 const app = express();
-const port = 9090;
+const port = 888;
 
 const db = mongoose.connection;
 db.on('error', console.error);
