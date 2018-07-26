@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> shorten-url </title>
+	<link rel="stylesheet" href="/public/ui.css">
+</head>
+<body>
+	<div id="wrap">
+		<div id="header">
+			<h1>shorten-url</h1>
+		</div>
+		<div id="contents">
+			<div class="urlBoxWrap">
+				<div id="urlBox"><input id="url" type="text" placeholder="주소를 입력하세요" /></div>
+				<a id="btnCreateUrl" href="#">만들기</a>
+			</div>
+			<div id="createdUrl">
+				<p>생성된 단축url <a id="shortUrl" href="#none" target="_blank"></a>
+				<p><a id="btnCopyUrl" href="#">단축url 복사</a></p>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="/public/ui.js"></script>
+</body>
+</html>
