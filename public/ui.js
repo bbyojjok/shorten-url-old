@@ -51,4 +51,7 @@
 		e.clearSelection();
 		alert('복사 완료\n' + e.text);
 	});
+	$('#btnCopyUrl').bind('click', function(e){
+		e.preventDefault();
+	});
 })(jQuery);
