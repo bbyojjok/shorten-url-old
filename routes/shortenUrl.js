@@ -6,6 +6,8 @@ const ShortenUrl = require('../models/shortenUrl');
 
 route.get('/:urlCode?', async (req, res) => {
 	const urlCode = req.params.urlCode;
+	console.log(urlCode);
+
 	switch (urlCode) {
 		case undefined:
 			return res.sendFile(path.join(__dirname, '../', 'views/create.html'));
@@ -17,7 +19,7 @@ route.get('/:urlCode?', async (req, res) => {
 			const queryResult = await ShortenUrl.findOne({ urlCode: urlCode }, err => {
 				if (err) throw err;
 			});
-			if (queryResult) return res.redirect(301, queryResult.originalUrl);
+			if (queryResult) return res.redirect(queryResult.originalUrl);
 			else return res.redirect('/error');
 			break;
 	}
@@ -30,10 +32,14 @@ route.post('/api/create', async (req, res) => {
 	const updatedAt = new Date();
 	if (validUrl.isUri(originalUrl)) {
 		const queryResult = await ShortenUrl.findOne({ originalUrl: originalUrl }, err => {
-			if (err) return res.status(401).send('Error: ' + err);
+			if (err) return res.status(401).send('DB Error: ' + err);
 		});
 		if (queryResult) {
-			return res.status(200).json(queryResult);
+			const shortUrl = shortBaseUrl + queryResult.urlCode;
+			const updateResult = await ShortenUrl.findOneAndUpdate({ originalUrl: originalUrl }, { $set: { shortUrl: shortUrl } }, { new: true }, err => {
+				if (err) return res.status(401).send('DB Error: ' + err);
+			});
+			return res.status(200).json(updateResult);
 		} else {
 			const shortUrl = shortBaseUrl + urlCode;
 			const queryResult = new ShortenUrl({
@@ -43,7 +49,7 @@ route.post('/api/create', async (req, res) => {
 				updatedAt
 			});
 			await queryResult.save((err) => {
-				if (err) return res.status(401).send('Error: ' + err);
+				if (err) return res.status(401).send('DB Error: ' + err);
 			});
 			return res.status(200).json(queryResult);
 		}

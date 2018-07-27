@@ -42,19 +42,13 @@
 		*/
 		return false;
 	});
-
-	$('#btnCopyUrl').bind('click', function(){
-		var target = $('#shortUrl').text();
-		var $temp = $('<input style="visibility:hidden;">');
-		$('body').append($temp);
-		$temp.val(target).select();
-		document.execCommand('copy');
-		$temp.remove();
-		alert('복사 완료\n' + target);
-		return false;
-	});
-
 	$('#url').bind('keydown', function(e){
 		if (e.keyCode == 13) $('#btnCreateUrl').trigger('click');
+	});
+	
+	var clipboard = new ClipboardJS('#btnCopyUrl');
+	clipboard.on('success', function(e) {
+		e.clearSelection();
+		alert('복사 완료\n' + e.text);
 	});
 })(jQuery);

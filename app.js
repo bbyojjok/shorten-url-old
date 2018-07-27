@@ -13,6 +13,7 @@ db.once('open', () => { console.log('Connected to mongodb server'); });
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://127.0.0.1/shorten-url');
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', route);
 app.use('/public', express.static(path.join(__dirname, 'public')));
