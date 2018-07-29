@@ -17,7 +17,7 @@ route.get('/:urlCode?', async (req, res) => {
 			const queryResult = await ShortenUrl.findOne({ urlCode: urlCode }, err => {
 				if (err) throw err;
 			});
-			if (queryResult) return res.redirect(queryResult.originalUrl);
+			if (queryResult) return res.redirect(301, queryResult.originalUrl);
 			else return res.redirect('/error');
 			break;
 	}
