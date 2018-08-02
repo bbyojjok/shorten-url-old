@@ -1,8 +1,8 @@
-const route = require('express').Router();
 const path = require('path');
 const shortid = require('shortid');
 const validUrl = require('valid-url');
 const ShortenUrl = require('../models/shortenUrl');
+const route = require('express').Router();
 
 route.get('/:urlCode?', async (req, res) => {
 	const urlCode = req.params.urlCode;
@@ -25,7 +25,8 @@ route.get('/:urlCode?', async (req, res) => {
 
 route.post('/api/create', async (req, res) => {
 	const originalUrl = req.body.originalUrl;
-	const shortBaseUrl = req.protocol + '://' + req.headers.host + '/';
+	const shortBaseUrl = `${req.protocol}://${req.headers.host}`;
+	//const shortBaseUrl = req.protocol + '://' + req.headers.host + '/';
 	const urlCode = shortid.generate();
 	const updatedAt = new Date();
 	if (validUrl.isUri(originalUrl)) {
