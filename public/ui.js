@@ -1,13 +1,14 @@
 (function($){
-	$('#btnCreateUrl').bind('click', function(){
+	$('#btnCreateUrl').bind('click', function(e){
 		var url = $('#url').val().trim();
 		var origin = location.origin;
 		if (!url || url == '') {
-			alert('주소를 넣어주세요');
+			alert('paste link or url to input');
 			$('#url').focus();
 			return false;
 		}
-		// use $.ajax
+
+		// $.ajax()
 		$.ajax({
 			method: 'POST',
 			url: origin+'/api/create',
@@ -16,14 +17,15 @@
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR){
 				var shortUrl = data.shortUrl;
-				$('#createdUrl').show().find('#shortUrl').text(shortUrl).attr('href', shortUrl);
+				$('#createdUrl').fadeIn(300).find('#shortUrl span').text(shortUrl).attr('href', shortUrl);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				alert(jqXHR.responseText);
 			}
 		});
+
 		/*
-		// use fetch 
+		// fetch()
 		fetch(origin+'/api/create', {
 			method: 'POST',
 			body: JSON.stringify({ originalUrl: url }),
@@ -40,8 +42,10 @@
 			});
 		});
 		*/
+
 		return false;
 	});
+
 	$('#url').bind('keydown', function(e){
 		if (e.keyCode == 13) $('#btnCreateUrl').trigger('click');
 	});
@@ -49,7 +53,7 @@
 	var clipboard = new ClipboardJS('#btnCopyUrl');
 	clipboard.on('success', function(e) {
 		e.clearSelection();
-		alert('복사 완료\n' + e.text);
+		$('#shortUrl').addClass('copied');
 	});
 	$('#btnCopyUrl').bind('click', function(e){
 		e.preventDefault();
