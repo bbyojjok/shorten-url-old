@@ -26,7 +26,6 @@ route.get('/:urlCode?', async (req, res) => {
 route.post('/api/create', async (req, res) => {
 	const originalUrl = req.body.originalUrl;
 	const shortBaseUrl = `${req.protocol}://${req.headers.host}`;
-	//const shortBaseUrl = req.protocol + '://' + req.headers.host + '/';
 	const urlCode = shortid.generate();
 	const updatedAt = new Date();
 	if (validUrl.isUri(originalUrl)) {
