@@ -47,7 +47,7 @@
 	});
 
 	$('#url').bind('keydown', function(e){
-		if (e.keyCode == 13) $('#btnCreateUrl').trigger('click');
+		if (e.keyCode === 13) $('#btnCreateUrl').trigger('click');
 	});
 	
 	var clipboard = new ClipboardJS('#btnCopyUrl');
