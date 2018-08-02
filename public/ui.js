@@ -17,7 +17,7 @@
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR){
 				var shortUrl = data.shortUrl;
-				$('#createdUrl').fadeIn(300).find('#shortUrl span').text(shortUrl).attr('href', shortUrl);
+				$('#createdUrl').fadeIn(300).find('#shortUrl').attr('href', shortUrl).find('> span').text(shortUrl);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				alert(jqXHR.responseText);
