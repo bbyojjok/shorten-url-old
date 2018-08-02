@@ -30,12 +30,12 @@ route.post('/api/create', async (req, res) => {
 	const updatedAt = new Date();
 	if (validUrl.isUri(originalUrl)) {
 		const queryResult = await ShortenUrl.findOne({ originalUrl: originalUrl }, err => {
-			if (err) return res.status(401).send('DB Error: ' + err);
+			if (err) return res.status(401).send(`DB Error: ${err}`);
 		});
 		if (queryResult) {
 			const shortUrl = shortBaseUrl + queryResult.urlCode;
 			const updateResult = await ShortenUrl.findOneAndUpdate({ originalUrl: originalUrl }, { $set: { shortUrl: shortUrl } }, { new: true }, err => {
-				if (err) return res.status(401).send('DB Error: ' + err);
+				if (err) return res.status(401).send(`DB Error: ${err}`);
 			});
 			return res.status(200).json(updateResult);
 		} else {
@@ -47,7 +47,7 @@ route.post('/api/create', async (req, res) => {
 				updatedAt
 			});
 			await queryResult.save((err) => {
-				if (err) return res.status(401).send('DB Error: ' + err);
+				if (err) return res.status(401).send(`DB Error: ${err}`);
 			});
 			return res.status(200).json(queryResult);
 		}
