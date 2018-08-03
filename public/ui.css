@@ -3,14 +3,15 @@
 /******************************************************************************
 ***  reset
 ******************************************************************************/
-body {font:12px Gulim, "굴림", Dotum, "돋움";color:#333;line-height:1;}
+html, body {-webkit-text-size-adjust:none;}
+body {font:12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";color:#333;line-height:1;}
 body,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,p,form,fieldset,input,table,tr,th,td {margin:0;padding:0;}
 h1,h2,h3,h4,h5,h6 {font-weight:normal;font-size:1em;}
 ol, ul {list-style:none;}
 fieldset,img {border:none;}
 table {border-collapse:collapse;border-spacing:0;}
 a:link,a:visited,a:active {color:#666;text-decoration:none;}
-a:hover {color:#000}
+a:hover {color:#000;}
 
 /* input-style */
 input.checkbox {width:13px;height:13px;vertical-align:top;}
@@ -25,7 +26,7 @@ input.checkbox {width:13px;height:13px;vertical-align:top;}
 article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,mark {display:block;}
 
 /* blind */
-caption,legend, .blind {position:absolute; width:0; height:0; overflow:hidden; font-size:0; line-height:0; visibility:hidden; z-index:-1;}
+caption,legend, .blind {position:absolute;width:0;height:0;overflow:hidden;font-size:0;line-height:0;visibility:hidden;z-index:-1;}
 
 
 /******************************************************************************

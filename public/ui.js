@@ -3,7 +3,7 @@
 		var url = $('#url').val().trim();
 		var origin = location.origin;
 		if (!url || url == '') {
-			alert('paste link or url to input');
+			alert('Paste link or url to input');
 			$('#url').focus();
 			return false;
 		}
