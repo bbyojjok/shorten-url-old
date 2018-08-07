@@ -71,7 +71,7 @@ route.post('/api/create', async (req, res) => {
 	let result = [];
 	switch (typeof originalUrl) {
 		case 'string':
-			await result.push(createShortenUrl(req, res, originalUrl));
+			await result.push(await createShortenUrl(req, res, originalUrl));
 			break;
 		case 'object':
 			for (var i=0; i < originalUrl.length; i++) {
@@ -81,14 +81,12 @@ route.post('/api/create', async (req, res) => {
 		default:
 			return res.status(401).send('Error: Worng param');
 	}
-	console.log('# create');
 	return res.status(200).json(result);
 });
 
 route.post('/api/remove', async (req, res) => {
 	ShortenUrl.remove({}, error => {
 		if (error) return res.status(401).send(`DB Error: ${error}`);
-		console.log('# remove coll');
 		return res.status(200).send('collection removed');
 	});
 });
@@ -100,13 +98,11 @@ route.get('/api/find/:urlCode?', async (req, res) => {
 			const findResult = await ShortenUrl.find({}, error => {
 				if (error) return res.status(401).send(`DB Error: ${error}`);
 			});
-			console.log('# find');
 			return res.status(200).json(findResult);
 		default:
 			const findOneResult = await ShortenUrl.findOne({ urlCode: urlCode }, error => {
 				if (error) return res.status(401).send(`DB Error: ${error}`);
 			});
-			console.log('# find');
 			return res.status(200).json(findOneResult);
 	}
 });

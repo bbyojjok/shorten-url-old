@@ -16,7 +16,7 @@
 			data: JSON.stringify({ originalUrl: url }),
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR){
-				var shortUrl = data.shortUrl;
+				var shortUrl = data[0].shortUrl;
 				$('#createdUrl').fadeIn(300).find('#shortUrl').attr('href', shortUrl).find('> span').text(shortUrl);
 			},
 			error: function(jqXHR, textStatus, errorThrown){
@@ -34,7 +34,7 @@
 			if (!res.ok) { throw res }
 			return res.json();
 		}).then(function(data){
-			var shortUrl = data.shortUrl;
+			var shortUrl = data[0].shortUrl;
 			$('#createdUrl').show().find('#shortUrl').text(shortUrl).attr('href', shortUrl);
 		}).catch(function(err){
 			err.text().then(function(result){
