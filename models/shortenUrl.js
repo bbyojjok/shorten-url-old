@@ -5,6 +5,7 @@ const shortenUrl = new Schema({
 	originalUrl: String,
 	urlCode: String,
 	shortUrl: String,
+	count: { type: Number, default: 0 },
 	createdAt: { type: Date, default: getKSTDate() },
 	updatedAt: { type: Date, default: getKSTDate() }
 });

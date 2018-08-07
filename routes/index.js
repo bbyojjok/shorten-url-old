@@ -17,11 +17,7 @@ async function createShortenUrl(req, res, originalUrl) {
 			const shortUrl = shortBaseUrl + queryResult.urlCode;
 			const updateResult = await ShortenUrl.findOneAndUpdate(
 				{ originalUrl: originalUrl },
-				{ $set: {
-						shortUrl: shortUrl,
-						updatedAt: updatedAt
-					}
-				},
+				{ $set: { shortUrl: shortUrl, updatedAt: updatedAt }},
 				{ new: true },
 				error => {
 				if (error) return res.status(401).send(`DB Error: ${error}`);
@@ -53,10 +49,21 @@ route.get('/:urlCode?', async (req, res) => {
 			return res.sendFile(path.join(__dirname, '../', 'views/error.html'));
 		default:
 			const queryResult = await ShortenUrl.findOne({ urlCode: urlCode }, error => {
-				if (error) throw error;
+				if (error) return res.status(401).send(`DB Error: ${error}`);
 			});
-			if (queryResult) return res.redirect(301, queryResult.originalUrl);
-			else return res.redirect('/error');
+			if (queryResult) {
+				const count = queryResult.count + 1;
+				const updateResult = await ShortenUrl.findOneAndUpdate(
+					{ urlCode: urlCode },
+					{ $set: { count: count }},
+					{ new: true },
+					error => {
+					if (error) return res.status(401).send(`DB Error: ${error}`);
+				});
+				return res.redirect(updateResult.originalUrl);
+			} else {
+				return res.redirect('/error');
+			}
 	}
 });
 
