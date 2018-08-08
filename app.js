@@ -1,9 +1,10 @@
 const express = require('express');
+const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const route = require('./routes');
 const mongoose = require('mongoose');
-const app = express();
+const security = require('./security')(app);
 const port = 888;
 
 const connection = mongoose.connection;
