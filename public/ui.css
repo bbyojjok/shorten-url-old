@@ -55,8 +55,19 @@ caption,legend, .blind {position:absolute;width:0;height:0;overflow:hidden;font-
 }
 #shortUrl.copied:after {width:100%;}
 
-#btnCreateUrl {display:block;padding:10px;margin:0 30px;font-size:16px;color:#fff;background-color:#333;border-radius:5px;}
+#btnCreateUrl {display:block;margin:0 30px;padding:10px;font-size:16px;color:#fff;background-color:#333;border-radius:5px;}
 #btnCopyUrl {display:inline-block;margin:0 0 0 5px;padding:8px;color:#fff;background-color:#006dc9;border-radius:5px;}
 
+#contents {padding-bottom:30px;}
 #contents .msgBox {padding:0 20px 20px 20px;font-size:15px;line-height:1.4;}
 #contents .btnBack {display:inline-block;padding:8px;color:#fff;background-color:#333;border-radius:5px;}
+
+#contents .apiList {padding:0 20px;text-align:left;}
+#contents .apiList .itemBox {padding:0 10px;}
+#contents .apiList .tableBox {overflow-y:auto;margin-bottom:50px;}
+#contents .apiList h2 {margin-bottom:30px;padding:10px;font-size:16px;font-weight:600;color:#eee;background-color:#333;}
+#contents .apiList h3 {padding:0 0 15px 0;font-size:14px;font-weight:600;}
+#contents .apiList table {width:100%;border-bottom:1px solid #999;}
+#contents .apiList table th {padding:10px;text-align:left;border-top:2px solid #999;line-height:1.4;background-color:#eee;}
+#contents .apiList table td {padding:10px;border-top:1px solid #999;line-height:1.4;}
+#contents .apiList pre {font-size:12px;color:#666;}

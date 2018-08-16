@@ -41,6 +41,8 @@ route.get('/:urlCode?', async (req, res) => {
 	switch (urlCode) {
 		case undefined:
 			return res.sendFile(path.join(__dirname, '../', 'views/create.html'));
+		case 'api':
+			return res.sendFile(path.join(__dirname, '../', 'views/api.html'));
 		case 'error':
 			return res.sendFile(path.join(__dirname, '../', 'views/error.html'));
 		default:
@@ -62,9 +64,9 @@ route.get('/:urlCode?', async (req, res) => {
 route.get('/api/find/:urlCode?', async (req, res) => {
 	const urlCode = req.params.urlCode;
 	const limit = parseInt(req.query.limit) || 40;
-	const count = req.query.count;
+	const sort = req.query.sort_by;
 	let options = { limit: limit };
-	if (count !== undefined) {
+	if (sort === 'count') {
 		options.sort = { count: -1 }
 	}
 	
