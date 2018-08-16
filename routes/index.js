@@ -61,15 +61,16 @@ route.get('/:urlCode?', async (req, res) => {
 
 route.get('/api/find/:urlCode?', async (req, res) => {
 	const urlCode = req.params.urlCode;
+	const limit = parseInt(req.query.limit) || 40;
+	const count = req.query.count;
+	let options = { limit: limit };
+	if (count !== undefined) {
+		options.sort = { count: -1 }
+	}
+	
 	switch (urlCode) {
 		case undefined:
-			ShortenUrl.find({}, (err, docs) => {
-				if (err) return res.status(401).send(`DB Error: ${err}`);
-				return res.status(200).json(docs);
-			});
-			break;
-		case 'count':
-			ShortenUrl.find({}, null, {sort: {count: -1}}, (err, docs) => {
+			ShortenUrl.find({}, null, options, (err, docs) => {
 				if (err) return res.status(401).send(`DB Error: ${err}`);
 				return res.status(200).json(docs);
 			});
