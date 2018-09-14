@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+const compression = require('compression')
 const route = require('./routes');
 const mongoose = require('mongoose');
 const security = require('./security')(app);
@@ -15,6 +16,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/shorten-url', { useNewUrlParser: tru
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(compression());
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/', route);
 
