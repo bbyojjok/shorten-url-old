@@ -6,7 +6,7 @@ const ShortenUrl = require('../models/shortenUrl');
 const route = require('express').Router();
 
 async function createShortenUrl(req, res, originalUrl) {
-	const shortBaseUrl = `${req.protocol}://${req.headers.host}/`;
+	const shortBaseUrl = `${req.headers.origin}/`;
 	const urlCode = shortid.generate();
 	const updatedAt = getKSTDate();
 	if (validUrl.isUri(originalUrl)) {
