@@ -1,31 +1,38 @@
-(function($){
-	$('#btnCreateUrl').bind('click', function(e){
-		var url = $('#url').val().trim();
-		var origin = location.origin;
-		if (!url || url == '') {
-			alert('Paste link or url to input');
-			$('#url').focus();
-			return false;
-		}
+(function($) {
+  $('#btnCreateUrl').bind('click', function(e) {
+    var url = $('#url')
+      .val()
+      .trim();
+    var origin = location.origin;
+    if (!url || url == '') {
+      alert('Paste link or url to input');
+      $('#url').focus();
+      return false;
+    }
 
-		// $.ajax()
-		$.ajax({
-			method: 'POST',
-			url: origin+'/api/create',
-			contentType: 'application/json',
-			data: JSON.stringify({ originalUrl: url }),
-			dataType: 'json',
-			success: function(data, textStatus, jqXHR){
-				var shortUrl = data[0].shortUrl;
-				$('#createdUrl').fadeIn(300).find('#shortUrl').attr('href', shortUrl).find('> span').text(shortUrl);
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				alert(jqXHR.responseText);
-			}
-		});
+    // $.ajax
+    $.ajax({
+      method: 'POST',
+      url: origin + '/api/create',
+      contentType: 'application/json',
+      data: JSON.stringify({ originalUrl: url }),
+      dataType: 'json',
+      success: function(data, textStatus, jqXHR) {
+        var shortUrl = data[0].shortUrl;
+        $('#createdUrl')
+          .fadeIn(300)
+          .find('#shortUrl')
+          .attr('href', shortUrl)
+          .find('> span')
+          .text(shortUrl);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert(jqXHR.responseText);
+      }
+    });
 
-		/*
-		// fetch()
+    /*
+		// fetch
 		fetch(origin+'/api/create', {
 			method: 'POST',
 			body: JSON.stringify({ originalUrl: url }),
@@ -43,19 +50,19 @@
 		});
 		*/
 
-		return false;
-	});
+    return false;
+  });
 
-	$('#url').bind('keydown', function(e){
-		if (e.keyCode === 13) $('#btnCreateUrl').trigger('click');
-	});
-	
-	var clipboard = new ClipboardJS('#btnCopyUrl');
-	clipboard.on('success', function(e) {
-		e.clearSelection();
-		$('#shortUrl').addClass('copied');
-	});
-	$('#btnCopyUrl').bind('click', function(e){
-		e.preventDefault();
-	});
+  $('#url').bind('keydown', function(e) {
+    if (e.keyCode === 13) $('#btnCreateUrl').trigger('click');
+  });
+
+  var clipboard = new ClipboardJS('#btnCopyUrl');
+  clipboard.on('success', function(e) {
+    e.clearSelection();
+    $('#shortUrl').addClass('copied');
+  });
+  $('#btnCopyUrl').bind('click', function(e) {
+    e.preventDefault();
+  });
 })(jQuery);

@@ -3,71 +3,275 @@
 /******************************************************************************
 ***  reset
 ******************************************************************************/
-html, body {-webkit-text-size-adjust:none;}
-body {font:12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";color:#333;line-height:1;}
-body,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,p,form,fieldset,input,table,tr,th,td {margin:0;padding:0;}
-h1,h2,h3,h4,h5,h6 {font-weight:normal;font-size:1em;}
-ol, ul {list-style:none;}
-fieldset,img {border:none;}
-table {border-collapse:collapse;border-spacing:0;}
-a:link,a:visited,a:active {color:#666;text-decoration:none;}
-a:hover {color:#000;}
+html,
+body {
+  -webkit-text-size-adjust: none;
+}
+body {
+  font: 12px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  color: #333;
+  line-height: 1;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+p,
+form,
+fieldset,
+input,
+table,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  font-size: 1em;
+}
+ol,
+ul {
+  list-style: none;
+}
+fieldset,
+img {
+  border: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+a:link,
+a:visited,
+a:active {
+  color: #666;
+  text-decoration: none;
+}
+a:hover {
+  color: #000;
+}
 
 /* input-style */
-input.checkbox {width:13px;height:13px;vertical-align:top;}
-* html input {margin:-1px 0;}
-*:first-child+html input {margin:-1px 0}
+input.checkbox {
+  width: 13px;
+  height: 13px;
+  vertical-align: top;
+}
+* html input {
+  margin: -1px 0;
+}
+*:first-child + html input {
+  margin: -1px 0;
+}
 
 /* clear */
-.clear:after {content:"";clear:both;display:block;visibility:hidden;}
-.clear{*zoom:1;}
+.clear:after {
+  content: '';
+  clear: both;
+  display: block;
+  visibility: hidden;
+}
+.clear {
+  *zoom: 1;
+}
 
 /* html5 */
-article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,mark {display:block;}
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+mark {
+  display: block;
+}
 
 /* blind */
-caption,legend, .blind {position:absolute;width:0;height:0;overflow:hidden;font-size:0;line-height:0;visibility:hidden;z-index:-1;}
-
+caption,
+legend,
+.blind {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  font-size: 0;
+  line-height: 0;
+  visibility: hidden;
+  z-index: -1;
+}
 
 /******************************************************************************
 ***  ui
 ******************************************************************************/
-#wrap {width:100%;text-align:center;}
-#header {margin-bottom:30px;padding:15px 30px;box-shadow:0px 3px 15px 0px #aaa;background-color:#000;}
-#header h1 a {font-size:20px;font-weight:600;color:#fff;}
-
-#urlBox {box-sizing:border-box;margin:0 30px 15px 30px;border:1px solid #333;border-radius:5px;}
-#urlBox input {box-sizing:border-box;padding:10px;width:100%;height:100%;font-size:16px;color:#666;border:0;border-radius:5px;}
-
-#createdUrl {display:none;padding:30px;}
-#createdUrl p {padding-bottom:10px;}
-
-#shortUrl {display:inline-block;padding:5px;font-size:15px;font-weight:600;color:#006dc9;
-	-webkit-transition:color 1s;
-	-moz-transition:color 1s;
-	transition:color 1s;
+#wrap {
+  width: 100%;
+  text-align: center;
 }
-#shortUrl span {display:inline-block;padding:2px;}
-#shortUrl:after {content:"";display:block;margin-top:2px;width:0px;height:1px;background-color:#006dc9;
-	-webkit-transition:width 1.5s;
-	-moz-transition:width 1.5s;
-	transition:width 1.5s;
+#header {
+  margin-bottom: 30px;
+  padding: 15px 30px;
+  box-shadow: 0px 3px 15px 0px #aaa;
+  background-color: #000;
 }
-#shortUrl.copied:after {width:100%;}
+#header h1 a {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
 
-#btnCreateUrl {display:block;margin:0 30px;padding:10px;font-size:16px;color:#fff;background-color:#333;border-radius:5px;}
-#btnCopyUrl {display:inline-block;margin:0 0 0 5px;padding:8px;color:#fff;background-color:#006dc9;border-radius:5px;}
+#urlBox {
+  box-sizing: border-box;
+  margin: 0 30px 15px 30px;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+#urlBox input {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  color: #666;
+  border: 0;
+  border-radius: 5px;
+}
 
-#contents {padding-bottom:30px;}
-#contents .msgBox {padding:0 20px 20px 20px;font-size:15px;line-height:1.4;}
-#contents .btnBack {display:inline-block;padding:8px;color:#fff;background-color:#333;border-radius:5px;}
+#createdUrl {
+  display: none;
+  padding: 30px;
+}
+#createdUrl p {
+  padding-bottom: 10px;
+}
 
-#contents .apiList {padding:0 20px;text-align:left;}
-#contents .apiList .itemBox {padding:0 10px;}
-#contents .apiList .tableBox {overflow-y:auto;margin-bottom:50px;}
-#contents .apiList h2 {margin-bottom:30px;padding:10px;font-size:16px;font-weight:600;color:#eee;background-color:#333;}
-#contents .apiList h3 {padding:0 0 15px 0;font-size:14px;font-weight:600;}
-#contents .apiList table {width:100%;border-bottom:1px solid #999;}
-#contents .apiList table th {padding:10px;text-align:left;border-top:2px solid #999;line-height:1.4;background-color:#eee;}
-#contents .apiList table td {padding:10px;border-top:1px solid #999;line-height:1.4;}
-#contents .apiList pre {font-size:12px;color:#666;}
+#shortUrl {
+  display: inline-block;
+  padding: 5px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #006dc9;
+  -webkit-transition: color 1s;
+  -moz-transition: color 1s;
+  transition: color 1s;
+}
+#shortUrl span {
+  display: inline-block;
+  padding: 2px;
+}
+#shortUrl:after {
+  content: '';
+  display: block;
+  margin-top: 2px;
+  width: 0px;
+  height: 1px;
+  background-color: #006dc9;
+  -webkit-transition: width 1.5s;
+  -moz-transition: width 1.5s;
+  transition: width 1.5s;
+}
+#shortUrl.copied:after {
+  width: 100%;
+}
+
+#btnCreateUrl {
+  display: block;
+  margin: 0 30px;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #333;
+  border-radius: 5px;
+}
+#btnCopyUrl {
+  display: inline-block;
+  margin: 0 0 0 5px;
+  padding: 8px;
+  color: #fff;
+  background-color: #006dc9;
+  border-radius: 5px;
+}
+
+#contents {
+  padding-bottom: 30px;
+}
+#contents .msgBox {
+  padding: 0 20px 20px 20px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+#contents .btnBack {
+  display: inline-block;
+  padding: 8px;
+  color: #fff;
+  background-color: #333;
+  border-radius: 5px;
+}
+
+#contents .apiList {
+  padding: 0 20px;
+  text-align: left;
+}
+#contents .apiList .itemBox {
+  padding: 0 10px;
+}
+#contents .apiList .tableBox {
+  overflow-y: auto;
+  margin-bottom: 50px;
+}
+#contents .apiList h2 {
+  margin-bottom: 30px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #eee;
+  background-color: #333;
+}
+#contents .apiList h3 {
+  padding: 0 0 15px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+#contents .apiList table {
+  width: 100%;
+  border-bottom: 1px solid #999;
+}
+#contents .apiList table th {
+  padding: 10px;
+  text-align: left;
+  border-top: 2px solid #999;
+  line-height: 1.4;
+  background-color: #eee;
+}
+#contents .apiList table td {
+  padding: 10px;
+  border-top: 1px solid #999;
+  line-height: 1.4;
+}
+#contents .apiList pre {
+  font-size: 12px;
+  color: #666;
+}
