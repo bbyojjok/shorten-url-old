@@ -25,6 +25,9 @@
           .attr('href', shortUrl)
           .find('> span')
           .text(shortUrl);
+        if ($('#shortUrl').hasClass('copied')) {
+          $('#shortUrl').removeClass('copied');
+        }
       },
       error: function(jqXHR, textStatus, errorThrown) {
         alert(jqXHR.responseText);
@@ -64,5 +67,8 @@
   });
   $('#btnCopyUrl').bind('click', function(e) {
     e.preventDefault();
+    if ($('#shortUrl').hasClass('copied')) {
+      $('#shortUrl').removeClass('copied');
+    }
   });
 })(jQuery);

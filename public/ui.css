@@ -189,12 +189,26 @@ legend,
   width: 0px;
   height: 1px;
   background-color: #006dc9;
+
+  /*
   -webkit-transition: width 1.5s;
   -moz-transition: width 1.5s;
   transition: width 1.5s;
+  */
 }
 #shortUrl.copied:after {
   width: 100%;
+  animation-name: drawline;
+  animation-duration: 1.2s;
+  animation-iteration-count: 1;
+}
+@keyframes drawline {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width: 100%;
+  }
 }
 
 #btnCreateUrl {

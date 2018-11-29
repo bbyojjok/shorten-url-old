@@ -6,7 +6,8 @@ const ShortenUrl = require('../models/shortenUrl');
 const route = require('express').Router();
 
 async function createShortenUrl(req, res, originalUrl) {
-  const shortBaseUrl = `${req.headers.origin}/`;
+  const reqHeadersOrigin = req.headers.origin || 'http://url.hdmall.com';
+  const shortBaseUrl = `${reqHeadersOrigin}/`;
   const urlCode = shortid.generate();
   const updatedAt = getKSTDate();
   if (validUrl.isUri(originalUrl)) {
@@ -46,8 +47,6 @@ route.get('/:urlCode?', async (req, res) => {
   switch (urlCode) {
     case undefined:
       return res.sendFile(path.join(__dirname, '../', 'views/create.html'));
-    case 'api':
-      return res.sendFile(path.join(__dirname, '../', 'views/api.html'));
     case 'error':
       return res.sendFile(path.join(__dirname, '../', 'views/error.html'));
     default:
@@ -69,6 +68,10 @@ route.get('/:urlCode?', async (req, res) => {
         return res.redirect('/error');
       }
   }
+});
+
+route.get('/api/docs/', (req, res) => {
+  return res.sendFile(path.join(__dirname, '../', 'views/api.html'));
 });
 
 route.get('/api/find/:urlCode?', async (req, res) => {
