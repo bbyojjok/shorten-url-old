@@ -45,7 +45,10 @@
 			return res.json();
 		}).then(function(data){
 			var shortUrl = data[0].shortUrl;
-			$('#createdUrl').show().find('#shortUrl').text(shortUrl).attr('href', shortUrl);
+      $('#createdUrl').show().find('#shortUrl').text(shortUrl).attr('href', shortUrl);
+      if ($('#shortUrl').hasClass('copied')) {
+        $('#shortUrl').removeClass('copied');
+      }
 		}).catch(function(err){
 			err.text().then(function(result){
 				alert(result);

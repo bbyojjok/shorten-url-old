@@ -47,6 +47,8 @@ route.get('/:urlCode?', async (req, res) => {
   switch (urlCode) {
     case undefined:
       return res.sendFile(path.join(__dirname, '../', 'views/create.html'));
+    case 'docs':
+      return res.sendFile(path.join(__dirname, '../', 'views/api.html'));
     case 'error':
       return res.sendFile(path.join(__dirname, '../', 'views/error.html'));
     default:
@@ -68,10 +70,6 @@ route.get('/:urlCode?', async (req, res) => {
         return res.redirect('/error');
       }
   }
-});
-
-route.get('/api/docs/', (req, res) => {
-  return res.sendFile(path.join(__dirname, '../', 'views/api.html'));
 });
 
 route.get('/api/find/:urlCode?', async (req, res) => {
