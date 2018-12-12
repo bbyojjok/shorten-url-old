@@ -3,11 +3,11 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const compression = require('compression');
+const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const route = require('./routes');
 const port = 888;
-require('./security')(app);
 
 const { connection } = mongoose;
 connection.on('error', console.error);
@@ -20,6 +20,22 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
+require('./security')(app);
+/*
+const whitelist = ['http://example1.com', 'http://example2.com'];
+app.use(
+  cors({
+    origin: function(origin, callback) {
+      console.log(origin);
+      if (whitelist.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  })
+);
+*/
 app.use(morgan('dev'));
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
