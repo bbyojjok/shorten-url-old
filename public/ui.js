@@ -20,7 +20,6 @@
       success: function(data, textStatus, jqXHR) {
         var shortUrl = data[0].shortUrl;
         var qrCode = data[0].qrCode;
-        var qrBox = '<div class="qrcode">' + qrCode + '</div>';
         $('#createdUrl')
           .fadeIn(300)
           .find('#shortUrl')
@@ -29,7 +28,9 @@
           .text(shortUrl)
           .end()
           .end()
-          .append(qrBox);
+          .find('.qrcode')
+          .empty()
+          .append(qrCode);
         if ($('#shortUrl').hasClass('copied')) {
           $('#shortUrl').removeClass('copied');
         }
