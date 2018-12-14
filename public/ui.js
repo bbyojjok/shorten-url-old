@@ -19,12 +19,17 @@
       dataType: 'json',
       success: function(data, textStatus, jqXHR) {
         var shortUrl = data[0].shortUrl;
+        var qrCode = data[0].qrCode;
+        var qrBox = '<div class="qrcode">' + qrCode + '</div>';
         $('#createdUrl')
           .fadeIn(300)
           .find('#shortUrl')
           .attr('href', shortUrl)
           .find('> span')
-          .text(shortUrl);
+          .text(shortUrl)
+          .end()
+          .end()
+          .append(qrBox);
         if ($('#shortUrl').hasClass('copied')) {
           $('#shortUrl').removeClass('copied');
         }

@@ -167,6 +167,10 @@ legend,
 #createdUrl p {
   padding-bottom: 10px;
 }
+#createdUrl .qrcode {
+  max-width: 200px;
+  margin: 20px auto 0;
+}
 
 #shortUrl {
   display: inline-block;
@@ -189,12 +193,6 @@ legend,
   width: 0px;
   height: 1px;
   background-color: #006dc9;
-
-  /*
-  -webkit-transition: width 1.5s;
-  -moz-transition: width 1.5s;
-  transition: width 1.5s;
-  */
 }
 #shortUrl.copied:after {
   width: 100%;

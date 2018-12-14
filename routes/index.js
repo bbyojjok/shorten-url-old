@@ -1,6 +1,7 @@
 const path = require('path');
 const shortid = require('shortid');
 const validUrl = require('valid-url');
+const qrImage = require('qr-image');
 const { getKSTDate } = require('../util');
 const ShortenUrl = require('../models/shortenUrl');
 const route = require('express').Router();
@@ -10,15 +11,17 @@ async function createShortenUrl(req, res, originalUrl) {
   const shortBaseUrl = `${reqHeadersOrigin}/`;
   const urlCode = shortid.generate();
   const updatedAt = getKSTDate();
+
   if (validUrl.isUri(originalUrl)) {
     const queryResult = await ShortenUrl.findOne({ originalUrl: originalUrl }, err => {
       if (err) return res.status(401).send(`DB Error: ${err}`);
     });
     if (queryResult) {
       const shortUrl = shortBaseUrl + queryResult.urlCode;
+      const qrCode = qrImage.imageSync(shortUrl, { type: 'svg' });
       const updateResult = await ShortenUrl.findOneAndUpdate(
         { originalUrl: originalUrl },
-        { $set: { shortUrl: shortUrl, updatedAt: updatedAt } },
+        { $set: { shortUrl: shortUrl, qrCode: qrCode, updatedAt: updatedAt } },
         { new: true },
         err => {
           if (err) return res.status(401).send(`DB Error: ${err}`);
@@ -27,10 +30,12 @@ async function createShortenUrl(req, res, originalUrl) {
       return updateResult;
     } else {
       const shortUrl = shortBaseUrl + urlCode;
+      const qrCode = qrImage.imageSync(shortUrl, { type: 'svg' });
       const queryResult = new ShortenUrl({
         originalUrl,
         shortUrl,
-        urlCode
+        urlCode,
+        qrCode
       });
       await queryResult.save(err => {
         if (err) return res.status(401).send(`DB Error: ${err}`);
