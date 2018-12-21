@@ -253,6 +253,7 @@ legend,
 #contents .apiList .tableBox {
   overflow-y: auto;
   margin-bottom: 50px;
+  -webkit-overflow-scrolling: touch;
 }
 #contents .apiList h2 {
   margin-bottom: 30px;
