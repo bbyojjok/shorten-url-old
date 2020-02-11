@@ -10,10 +10,7 @@ module.exports = app => {
   /*
 	app.use(helmet.contentSecurityPolicy({
 		// Specify directives as normal.
-		directives: {
-			defaultSrc: ["'self'"],
-			styleSrc: ["'self'"]
-		}
+		directives: {defaultSrc: ["'self'"], styleSrc: ["'self'"]}
 	}));
 	*/
 
@@ -35,39 +32,12 @@ module.exports = app => {
 
   // # hidePoweredBy
   // hidePoweredBy는 X-Powered-By 헤더를 제거합니다.
-  app.use(
-    helmet.hidePoweredBy({
-      setTo: 'ASP.NET 2.1.8'
-    })
-  );
-
-  // # hpkp
-  // hpkp는 Public Key Pinning 헤더를 추가하여, 위조된 인증서를 이용한 중간자 공격을 방지합니다.
-  const ninetyDaysInSeconds = 7776000;
-  app.use(
-    helmet.hpkp({
-      maxAge: ninetyDaysInSeconds,
-      sha256s: ['AbCdEf123=', 'ZyXwVu456='],
-      includeSubDomains: true, // optional
-      reportUri: 'http://example.com', // optional
-      reportOnly: false, // optional
-
-      // Set the header based on a condition.
-      // This is optional.
-      setIf(req, res) {
-        return req.secure;
-      }
-    })
-  );
+  app.use(helmet.hidePoweredBy({ setTo: 'ASP.NET 2.1.8' }));
 
   // # hsts
   // hsts는 서버에 대한 안전한(SSL/TLS를 통한 HTTP) 연결을 적용하는 Strict-Transport-Security 헤더를 설정합니다.
   const sixtyDaysInSeconds = 5184000;
-  app.use(
-    helmet.hsts({
-      maxAge: sixtyDaysInSeconds
-    })
-  );
+  app.use(helmet.hsts({ maxAge: sixtyDaysInSeconds }));
 
   // # ieNoOpen
   // ieNoOpen은 IE8 이상에 대해 X-Download-Options를 설정합니다.
@@ -82,11 +52,7 @@ module.exports = app => {
   app.use(helmet.noSniff());
 
   // # referrerPolicy
-  app.use(
-    helmet.referrerPolicy({
-      policy: 'same-origin'
-    })
-  );
+  app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
   // # xssFilter
   // xssFilter는 X-XSS-Protection을 설정하여 대부분의 최신 웹 브라우저에서 XSS(Cross-site scripting) 필터를 사용하도록 합니다.

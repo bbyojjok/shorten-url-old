@@ -1,106 +1,98 @@
+const route = require('express').Router();
 const path = require('path');
 const shortid = require('shortid');
 const validUrl = require('valid-url');
 const qrImage = require('qr-image');
 const { getKSTDate } = require('../util');
 const ShortenUrl = require('../models/shortenUrl');
-const route = require('express').Router();
 
-async function createShortenUrl(req, res, originalUrl) {
+const createShortenUrl = async (req, res, originalUrl) => {
   const reqHeadersOrigin = req.headers.origin || 'http://url.hdmall.com';
   const shortBaseUrl = `${reqHeadersOrigin}/`;
   const urlCode = shortid.generate();
   const updatedAt = getKSTDate();
 
   if (validUrl.isUri(originalUrl)) {
-    const queryResult = await ShortenUrl.findOne({ originalUrl: originalUrl }, err => {
-      if (err) return res.status(401).send(`DB Error: ${err}`);
+    const queryResult = await ShortenUrl.findOne({ originalUrl }, err => {
+      if (err) {
+        return res.status(401).send(`DB Error: ${err}`);
+      }
     });
+    const shortUrl = queryResult ? shortBaseUrl + queryResult.urlCode : shortBaseUrl + urlCode;
+    const qrCode = qrImage.imageSync(shortUrl, { type: 'svg' });
     if (queryResult) {
-      const shortUrl = shortBaseUrl + queryResult.urlCode;
-      const qrCode = qrImage.imageSync(shortUrl, { type: 'svg' });
       const updateResult = await ShortenUrl.findOneAndUpdate(
-        { originalUrl: originalUrl },
-        { $set: { shortUrl: shortUrl, qrCode: qrCode, updatedAt: updatedAt } },
+        { originalUrl },
+        { $set: { shortUrl, qrCode, updatedAt } },
         { new: true },
         err => {
-          if (err) return res.status(401).send(`DB Error: ${err}`);
+          if (err) {
+            return res.status(401).send(`DB Error: ${err}`);
+          }
         }
       );
       return updateResult;
     } else {
-      const shortUrl = shortBaseUrl + urlCode;
-      const qrCode = qrImage.imageSync(shortUrl, { type: 'svg' });
-      const queryResult = new ShortenUrl({
-        originalUrl,
-        shortUrl,
-        urlCode,
-        qrCode
+      const createResult = new ShortenUrl({ originalUrl, shortUrl, urlCode, qrCode });
+      await createResult.save(err => {
+        if (err) {
+          return res.status(401).send(`DB Error: ${err}`);
+        }
       });
-      await queryResult.save(err => {
-        if (err) return res.status(401).send(`DB Error: ${err}`);
-      });
-      return queryResult;
+      return createResult;
     }
-  } else {
-    return res.status(401).send('Error: Invaild url');
   }
-}
+  return res.status(401).send('Error: Invaild url');
+};
 
 route.get('/:urlCode?', async (req, res) => {
-  const urlCode = req.params.urlCode;
+  const { urlCode } = req.params;
   switch (urlCode) {
     case undefined:
       return res.sendFile(path.join(__dirname, '../', 'views/create.html'));
     case 'error':
       return res.sendFile(path.join(__dirname, '../', 'views/error.html'));
     default:
-      const queryResult = await ShortenUrl.findOne({ urlCode: urlCode }, err => {
+      const queryResult = await ShortenUrl.findOne({ urlCode }, err => {
         if (err) return res.status(401).send(`DB Error: ${err}`);
       });
       if (queryResult) {
         const count = queryResult.count + 1;
-        const updateResult = await ShortenUrl.findOneAndUpdate(
-          { urlCode: urlCode },
-          { $set: { count: count } },
-          { new: true },
-          err => {
-            if (err) return res.status(401).send(`DB Error: ${err}`);
+        const updateResult = await ShortenUrl.findOneAndUpdate({ urlCode }, { $set: { count } }, { new: true }, err => {
+          if (err) {
+            return res.status(401).send(`DB Error: ${err}`);
           }
-        );
+        });
         return res.redirect(301, updateResult.originalUrl);
-      } else {
-        return res.redirect('/error');
       }
+      return res.redirect('/error');
   }
-});
-
-route.get('/api/docs', (req, res) => {
-  res.sendFile(path.join(__dirname, '../', 'views/docs.html'));
 });
 
 route.get('/api/find/:urlCode?', async (req, res) => {
-  const urlCode = req.params.urlCode;
-  const limit = parseInt(req.query.limit) || 40;
-  const sort = req.query.sort_by;
-  let options = { limit: limit };
-  if (sort === 'count') {
-    options.sort = { count: -1 };
-  }
-
+  const { urlCode } = req.params;
+  const { limit, sort_by } = req.query;
+  const options = {
+    limit: parseInt(limit, 10) || 40,
+    sort: {
+      count: sort_by === 'count' ? -1 : 1
+    }
+  };
   switch (urlCode) {
     case undefined:
-      ShortenUrl.find({}, null, options, (err, docs) => {
-        if (err) return res.status(401).send(`DB Error: ${err}`);
-        return res.status(200).json(docs);
+      const allResult = await ShortenUrl.find({}, null, options, err => {
+        if (err) {
+          return res.status(401).send(`DB Error: ${err}`);
+        }
       });
-      break;
+      return res.status(200).json(allResult);
     default:
-      ShortenUrl.findOne({ urlCode: urlCode }, (err, docs) => {
-        if (err) return res.status(401).send(`DB Error: ${err}`);
-        return res.status(200).json(docs);
+      const oneResult = await ShortenUrl.findOne({ urlCode }, err => {
+        if (err) {
+          return res.status(401).send(`DB Error: ${err}`);
+        }
       });
-      break;
+      return res.status(200).json(oneResult);
   }
 });
 
@@ -111,8 +103,8 @@ route.get('/api/find/:urlCode?', async (req, res) => {
  * @return { object }
  */
 route.post('/api/create', async (req, res) => {
-  const originalUrl = req.body.originalUrl;
-  let result = [];
+  const { originalUrl } = req.body;
+  const result = [];
   switch (typeof originalUrl) {
     case 'string':
       await result.push(await createShortenUrl(req, res, originalUrl));
@@ -130,9 +122,15 @@ route.post('/api/create', async (req, res) => {
 
 route.post('/api/remove', async (req, res) => {
   ShortenUrl.remove({}, err => {
-    if (err) return res.status(401).send(`DB Error: ${err}`);
+    if (err) {
+      return res.status(401).send(`DB Error: ${err}`);
+    }
     return res.status(200).send('collection removed');
   });
+});
+
+route.get('/api/docs', (req, res) => {
+  res.sendFile(path.join(__dirname, '../', 'views/docs.html'));
 });
 
 module.exports = route;

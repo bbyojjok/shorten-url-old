@@ -3,8 +3,7 @@
 /******************************************************************************
 ***  reset
 ******************************************************************************/
-html,
-body {
+html, body {
   -webkit-text-size-adjust: none;
 }
 body {
@@ -13,54 +12,25 @@ body {
   color: #333;
   line-height: 1;
 }
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-ul,
-ol,
-li,
-dl,
-dt,
-dd,
-p,
-form,
-fieldset,
-input,
-table,
-tr,
-th,
-td {
+body, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, p, form, fieldset, input, table, tr, th, td {
   margin: 0;
   padding: 0;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   font-size: 1em;
 }
-ol,
-ul {
+ol, ul {
   list-style: none;
 }
-fieldset,
-img {
+fieldset, img {
   border: none;
 }
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-a:link,
-a:visited,
-a:active {
+a:link, a:visited, a:active {
   color: #666;
   text-decoration: none;
 }
@@ -93,27 +63,12 @@ input.checkbox {
 }
 
 /* html5 */
-article,
-aside,
-canvas,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section,
-summary,
-mark {
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, mark {
   display: block;
 }
 
 /* blind */
-caption,
-legend,
-.blind {
+caption, legend, .blind {
   position: absolute;
   width: 0;
   height: 0;

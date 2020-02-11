@@ -1,7 +1,7 @@
-const { getKSTDate } = require('../util');
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
+const { getKSTDate } = require('../util');
+
 const shortenUrl = new Schema({
   originalUrl: String,
   urlCode: String,
