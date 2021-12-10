@@ -1,6 +1,5 @@
 (function ($) {
-  $('#btnCreateUrl').bind('click', function (e) {
-    var url = $('#url').val().trim();
+  var getShortCode = function (url) {
     var origin = location.origin;
     if (!url || url == '') {
       alert('Paste link or url to input');
@@ -59,6 +58,11 @@
 			});
 		});
 		*/
+  };
+
+  $('#btnCreateUrl').bind('click', function (e) {
+    var url = $('#url').val().trim();
+    getShortCode(url);
 
     return false;
   });
@@ -79,29 +83,20 @@
     }
   });
 
-  function catchPaste(evt, elem, callback) {
-    if (navigator.clipboard && navigator.clipboard.readText) {
-      // modern approach with Clipboard API
-      navigator.clipboard.readText().then(callback);
-    } else if (evt.originalEvent && evt.originalEvent.clipboardData) {
-      // OriginalEvent is a property from jQuery, normalizing the event object
-      callback(evt.originalEvent.clipboardData.getData('text'));
-    } else if (evt.clipboardData) {
-      // used in some browsers for clipboardData
-      callback(evt.clipboardData.getData('text/plain'));
-    } else if (window.clipboardData) {
-      // Older clipboardData version for Internet Explorer only
-      callback(window.clipboardData.getData('Text'));
-    } else {
-      // Last resort fallback, using a timer
-      setTimeout(function () {
-        callback(elem.value);
-      }, 100);
-    }
+  function handlePaste(e) {
+    var clipboardData, pastedData;
+
+    // Stop data actually being pasted into div
+    // e.stopPropagation();
+    // e.preventDefault();
+
+    // Get pasted data via clipboard API
+    clipboardData = e.clipboardData || window.clipboardData;
+    pastedData = clipboardData.getData('Text');
+
+    // Do whatever with pasteddata
+    // console.log(pastedData);
+    getShortCode(pastedData.trim());
   }
-  $('#url').bind('paste', function (evt) {
-    catchPaste(evt, this, function (clipData) {
-      $('#btnCreateUrl').trigger('click');
-    });
-  });
+  document.getElementById('url').addEventListener('paste', handlePaste);
 })(jQuery);
