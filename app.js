@@ -19,18 +19,12 @@ mongoose.connect('mongodb://127.0.0.1:27017/shorten-url', { useNewUrlParser: tru
 
 require('./security')(app);
 // const whitelist = ['http://example1.com', 'http://example2.com'];
-// app.use(
-//   cors({
-//     origin: function(origin, callback) {
-//       console.log(origin);
-//       if (whitelist.indexOf(origin) !== -1 || !origin) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     }
-//   })
-// );
+app.use(
+  cors({
+    origin: 'https://www.thehyundai.com',
+    credentials: true
+  })
+);
 // app.use(morgan('dev'));
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: true }));
